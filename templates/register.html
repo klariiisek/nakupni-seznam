@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% from "macros.html" import input_field, button %}
+
+{% block title %}Registrace - Nákupní seznam{% endblock %}
+
+{% block content %}
+<section class="auth-shell">
+    <div class="auth-box">
+        <div class="auth-head">
+            <p class="eyebrow">Nákupní seznam</p>
+            <h1>Vytvoř si účet</h1>
+            <p class="muted">Začni organizovat svůj nákup během chvilky.</p>
+        </div>
+
+        <form method="POST" class="auth-form">
+            {{ input_field('username', 'Uživatelské jméno', autofocus=true) }}
+            <small class="form-hint">Pouze písmena, čísla a podtržítko (3-80 znaků).</small>
+            {{ input_field('password', 'Heslo', type='password') }}
+            <small class="form-hint">Minimálně 4 znaky.</small>
+            {{ button('Zaregistrovat', block=true) }}
+        </form>
+
+        <div class="auth-footer">
+            <span class="muted">Už máš účet?</span>
+            <a class="nav-link" href="{{ url_for('login') }}">Přihlas se</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

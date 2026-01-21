@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% from "macros.html" import navbar, stat_card, item_card %}
+
+{% block title %}Nákupní seznam - Přehled{% endblock %}
+
+{% block navbar %}
+    {{ navbar(user.username) }}
+{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="section-header">
+        <div>
+            <p class="eyebrow">Tvůj nákup</p>
+            <h1>Přehled položek</h1>
+        </div>
+        <a href="{{ url_for('add_item') }}" class="btn btn-primary">+ Nová položka</a>
+    </div>
+
+    <div class="stats-grid">
+        {{ stat_card('🛒', total, 'Celkem položek', 'stat-total') }}
+        {{ stat_card('✓', bought, 'Koupeno', 'stat-bought') }}
+        {{ stat_card('…', pending, 'Zbývá', 'stat-pending') }}
+        {{ stat_card('💰', pending_price|int ~ ' Kč', 'Cena zbývá', 'stat-pending') }}
+        {{ stat_card('Σ', total_price|int ~ ' Kč', 'Cena celkem', 'stat-total') }}
+    </div>
+
+    <div class="panel">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Seznam</p>
+                <h2>Nákupní list</h2>
+            </div>
+            <p class="muted">Klikni pro označení, úpravu nebo smazání.</p>
+        </div>
+        <div class="items-list">
+            {% if items %}
+                {% for item in items %}
+                    {{ item_card(item) }}
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <p>Tvůj seznam je prázdný. Přidej první položku.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

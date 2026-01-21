@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% from "macros.html" import navbar, input_field, textarea_field, priority_select, button %}
+
+{% block title %}Přidat úkol - Task Manager{% endblock %}
+
+{% block navbar %}
+    {{ navbar(session.username) }}
+{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="section-header">
+        <div>
+            <p class="eyebrow">Nový úkol</p>
+            <h1>Přidej si další položku</h1>
+        </div>
+        <a class="nav-link nav-link-muted" href="{{ url_for('dashboard') }}">Zpět na přehled</a>
+    </div>
+
+    <div class="panel">
+        <form method="POST" class="form-grid">
+            {{ input_field('title', 'Název úkolu', autofocus=true) }}
+            {{ textarea_field('description', 'Popis (volitelné)', required=false) }}
+            {{ priority_select() }}
+
+            <div class="form-actions">
+                {{ button('Přidat úkol') }}
+                <a href="{{ url_for('dashboard') }}" class="btn btn-ghost">Zrušit</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

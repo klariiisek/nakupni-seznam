@@ -1,0 +1,101 @@
+{# ============ MAKRO PRO INPUT FIELD ============ #}
+{% macro input_field(name, label, type='text', required=true, autofocus=false, value='', step='', min='') %}
+<div class="form-group">
+    <label for="{{ name }}">{{ label }}</label>
+    <input class="input-control"
+           type="{{ type }}"
+           id="{{ name }}"
+           name="{{ name }}"
+           value="{{ value|e }}"
+           {% if step %}step="{{ step }}"{% endif %}
+           {% if min %}min="{{ min }}"{% endif %}
+           {% if required %}required{% endif %}
+           {% if autofocus %}autofocus{% endif %}>
+</div>
+{% endmacro %}
+
+{# ============ MAKRO PRO TEXTAREA ============ #}
+{% macro textarea_field(name, label, required=false, rows=4, value='') %}
+<div class="form-group">
+    <label for="{{ name }}">{{ label }}</label>
+    <textarea class="input-control"
+              id="{{ name }}"
+              name="{{ name }}"
+              rows="{{ rows }}"
+              {% if required %}required{% endif %}>{{ value|e }}</textarea>
+</div>
+{% endmacro %}
+
+{# ============ MAKRO PRO SELECT (KATEGORIE) ============ #}
+{% macro category_select(name='category', selected='ostatni') %}
+<div class="form-group">
+    <label for="{{ name }}">Kategorie</label>
+    <select class="input-control" id="{{ name }}" name="{{ name }}">
+        <option value="zelenina" {% if selected == 'zelenina' %}selected{% endif %}>Zelenina</option>
+        <option value="ovoce" {% if selected == 'ovoce' %}selected{% endif %}>Ovoce</option>
+        <option value="ostatni" {% if selected == 'ostatni' %}selected{% endif %}>Ostatní</option>
+    </select>
+</div>
+{% endmacro %}
+
+{# ============ MAKRO PRO TLAČÍTKO ============ #}
+{% macro button(text, type='submit', btn_class='btn-primary', block=false) %}
+<button type="{{ type }}" class="btn {{ btn_class }}{% if block %} btn-block{% endif %}">
+    {{ text }}
+</button>
+{% endmacro %}
+
+{# ============ MAKRO PRO ITEM CARD ============ #}
+{% macro item_card(item) %}
+<div class="item-card {% if item.bought %}is-bought{% endif %}">
+    <div class="item-top">
+        <div class="item-titles">
+            <p class="item-label">
+                {% if item.price_formatted %}
+                    {{ item.price_formatted }} Kč
+                {% else %}
+                    {{ item.price }} Kč
+                {% endif %}
+            </p>
+            <h3 class="item-title">{{ item.title|e }}</h3>
+        </div>
+        <span class="pill pill-{{ item.category }}">{{ 'Zelenina' if item.category == 'zelenina' else 'Ovoce' if item.category == 'ovoce' else 'Ostatní' }}</span>
+    </div>
+
+    {% if item.description %}
+    <p class="item-description">{{ item.description|e }}</p>
+    {% endif %}
+
+    <div class="item-actions">
+        <a class="action-link" href="{{ url_for('toggle_item', item_id=item.id) }}">{{ 'Nekoupeno' if item.bought else 'Koupeno' }}</a>
+        <a class="action-link" href="{{ url_for('edit_item', item_id=item.id) }}">Upravit</a>
+        <a class="action-link action-danger" href="{{ url_for('delete_item', item_id=item.id) }}" onclick="return confirm('Opravdu chceš smazat tuto položku?')">Smazat</a>
+    </div>
+</div>
+{% endmacro %}
+
+{# ============ MAKRO PRO STAT CARD ============ #}
+{% macro stat_card(icon, value, label, card_class='') %}
+<div class="stat-card {{ card_class }}">
+    <div class="stat-icon">{{ icon }}</div>
+    <div>
+        <p class="stat-label">{{ label }}</p>
+        <h3 class="stat-value">{{ value }}</h3>
+    </div>
+</div>
+{% endmacro %}
+
+{# ============ MAKRO PRO NAVBAR ============ #}
+{% macro navbar(username) %}
+<header class="topbar">
+    <div class="topbar-inner">
+        <a class="brand" href="{{ url_for('dashboard') }}">Nákupní seznam</a>
+        <div class="topbar-actions">
+            <a class="nav-link" href="{{ url_for('dashboard') }}">Přehled</a>
+            <a class="nav-link" href="{{ url_for('add_item') }}">Nová položka</a>
+            <span class="nav-user">{{ username|e }}</span>
+            <a class="nav-link nav-link-muted" href="{{ url_for('logout') }}">Odhlásit</a>
+        </div>
+    </div>
+</header>
+{% endmacro %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% from "macros.html" import navbar, input_field, textarea_field, category_select, button %}
+
+{% block title %}Upravit položku - Nákupní seznam{% endblock %}
+
+{% block navbar %}
+    {{ navbar(session.username) }}
+{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="section-header">
+        <div>
+            <p class="eyebrow">Úprava</p>
+            <h1>Aktualizuj položku</h1>
+        </div>
+        <a class="nav-link nav-link-muted" href="{{ url_for('dashboard') }}">Zpět na přehled</a>
+    </div>
+
+    <div class="panel">
+        <form method="POST" class="form-grid">
+            {{ input_field('title', 'Název položky', value=item.title, autofocus=true) }}
+            {{ input_field('price', 'Cena (Kč)', type='number', step='1', min='0', required=false, value=item.price) }}
+            {{ textarea_field('description', 'Poznámka (volitelné)', value=item.description or '', required=false) }}
+            {{ category_select(selected=item.category) }}
+
+            <div class="form-actions">
+                {{ button('Uložit změny') }}
+                <a href="{{ url_for('dashboard') }}" class="btn btn-ghost">Zrušit</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

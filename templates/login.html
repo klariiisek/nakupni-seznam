@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% from "macros.html" import input_field, button %}
+
+{% block title %}Přihlášení - Nákupní seznam{% endblock %}
+
+{% block content %}
+<section class="auth-shell">
+    <div class="auth-box">
+        <div class="auth-head">
+            <p class="eyebrow">Nákupní seznam</p>
+            <h1>Přihlas se</h1>
+            <p class="muted">Vstup do svého seznamu nákupů.</p>
+        </div>
+
+        <form method="POST" class="auth-form">
+            {{ input_field('username', 'Uživatelské jméno', autofocus=true) }}
+            {{ input_field('password', 'Heslo', type='password') }}
+            {{ button('Přihlásit', block=true) }}
+        </form>
+
+        <div class="auth-footer">
+            <span class="muted">Nemáš účet?</span>
+            <a class="nav-link" href="{{ url_for('register') }}">Zaregistruj se</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
