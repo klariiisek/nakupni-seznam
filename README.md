@@ -1,4 +1,45 @@
-# � Nákupní seznam Web App
+
+
+docker compose up --build
+# Nákupní seznam (Flask)
+
+Malá Flask aplikace pro správu nákupního seznamu. Umožňuje registraci, přihlášení a práci s položkami, běží na SQLite i PostgreSQL a je připravená pro Docker.
+
+## Co umí
+
+- Přihlášení a registrace s hashovanými hesly
+- Přidávání, úprava, mazání a označení položek jako koupených
+- Kategorie Zelenina, Ovoce, Ostatni
+- Responzivní rozhraní pro mobil i desktop
+- Docker Compose konfigurace pro běh s PostgreSQL
+
+## Jak spustit lokálně (SQLite)
+
+1. Závislosti
+    ```bash
+    pip install -r requirements.txt
+    ```
+2. Start
+    ```bash
+    python app.py
+    ```
+3. Otevři v prohlížeči: http://127.0.0.1:5000
+
+## Jak spustit v Dockeru (PostgreSQL)
+
+1. Postav a spusť kontejnery:
+    ```bash
+    docker compose up --build
+    ```
+2. Aplikace poběží na: http://localhost:5000
+
+## Nastavení
+
+Proměnné prostředí:
+
+| Proměnná      | Popis                      | Výchozí hodnota            |
+|---------------|----------------------------|----------------------------|
+| SECRET_KEY    | Klíč p# � Nákupní seznam Web App
 
 Webová aplikace pro správu nákupního seznamu postavená na Flask frameworku s podporou PostgreSQL a SQLite databáze.
 
@@ -23,77 +64,34 @@ pip install -r requirements.txt
 ```bash
 python app.py
 ```
+ro session           | dev-secret-key-change-in-production |
+| DATABASE_URL  | URL databáze               | sqlite:///tasks.db         |
 
-3. Otevři v prohlížeči:
-```
-http://127.0.0.1:5000
-```
+Podporované databáze:
+- SQLite: sqlite:///tasks.db
+- PostgreSQL: postgresql://user:password@host:port/database
+- MySQL: mysql://user:password@host:port/database
 
-### Docker spuštění (PostgreSQL)
+## Použité technologie
 
-1. Spusť pomocí Docker Compose:
-```bash
-docker compose up --build
-```
+- Flask 3.0, Flask-SQLAlchemy, Flask-Migrate
+- SQLAlchemy 2, Werkzeug
+- HTML, CSS, Jinja2 šablony
+- Docker a Docker Compose
 
-2. Otevři v prohlížeči:
-```
-http://localhost:5000
-```
-
-## ⚙️ Konfigurace
-
-Aplikace podporuje konfiguraci pomocí proměnných prostředí:
-
-| Proměnná | Popis | Výchozí hodnota |
-|----------|-------|-----------------|
-| `SECRET_KEY` | Tajný klíč pro session | `dev-secret-key-change-in-production` |
-| `DATABASE_URL` | URL databáze | `sqlite:///shopping.db` |
-
-### Podporované databáze
-- **SQLite**: `sqlite:///shopping.db`
-- **PostgreSQL**: `postgresql://user:password@host:port/database`
-- **MySQL**: `mysql://user:password@host:port/database`
-
-## 🛠️ Použité technologie
-
-- **Backend**: Flask 3.0, Flask-SQLAlchemy, Flask-Migrate
-- **Databáze**: PostgreSQL / SQLite
-- **Frontend**: HTML5, CSS3, Jinja2 šablony
-- **Kontejnerizace**: Docker, Docker Compose
-- **Bezpečnost**: Werkzeug (hashování hesel)
-
-## 📁 Struktura projektu
+## Stručný přehled adresářů
 
 ```
-shopping-list/
-├── app.py                 # Hlavní Flask aplikace
-├── requirements.txt       # Python závislosti
-├── Dockerfile            # Docker konfigurace
-├── docker-compose.yml    # Docker Compose konfigurace
-├── .gitignore            # Git ignore soubor
-├── .env.example          # Příklad konfigurace prostředí
-├── .github/
-│   └── workflows/
-│       └── docker-publish.yml  # GitHub Actions pro Docker
-├── migrations/           # Databázové migrace (Alembic)
-│   ├── alembic.ini
-│   ├── env.py
-│   └── versions/
-├── templates/            # Jinja2 šablony
-│   ├── base.html         # Základní šablona
-│   ├── login.html        # Přihlášení
-│   ├── register.html     # Registrace
-│   ├── dashboard.html    # Nákupní seznam
-│   ├── add_item.html     # Přidání položky
-│   ├── edit_item.html    # Úprava položky
-│   └── macros.html       # Makra pro šablony
-└── static/
-    └── css/
-        └── style.css     # Styly
+app.py
+requirements.txt
+Dockerfile
+docker-compose.yml
+migrations/
+templates/
+static/
 ```
 
-## 📝 Licence
+## Licence
 
 MIT
 
