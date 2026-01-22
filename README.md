@@ -33,7 +33,7 @@ http://127.0.0.1:5000
 
 1. Spusť pomocí Docker Compose:
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 2. Otevři v prohlížeči:
